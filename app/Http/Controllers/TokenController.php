@@ -14,6 +14,7 @@ use Nette\Utils\Strings;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class TokenController extends Controller
 {
@@ -23,7 +24,7 @@ class TokenController extends Controller
 
     public function index()
     {
-        //
+        return view('auth/register1sukses');
     }
 
     /**
@@ -55,8 +56,7 @@ class TokenController extends Controller
             $token->save();
             
             Mail::to($request->email)->send(new TokenMail($generator));
-
-            
+            return redirect(route('register1Sukses'));
         }
 
     }
