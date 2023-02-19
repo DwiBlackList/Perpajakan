@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TokenMail;
 use App\Models\Token;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Validated;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Nette\Utils\Strings;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\App;
-
+use Illuminate\Support\Facades\Mail;
 
 class TokenController extends Controller
 {
@@ -52,6 +53,9 @@ class TokenController extends Controller
             $token->token = $generator;
             $token->email = $request->email;
             $token->save();
+            
+            Mail::to($request->email)->send(new TokenMail($generator));
+
             
         }
 
